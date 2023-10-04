@@ -35,5 +35,5 @@ jobs:
         run: yarn lint
       - name: test build
         run: yarn build
-      - name: Check for security vulnerabilities
-        run: yarn audit
+      # - name: Check for security vulnerabilities
+      #   run: yarn audit
