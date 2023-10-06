@@ -58,10 +58,10 @@ export default function SampleTable (): React.JSX.Element {
   return (
     <Table {...getTableProps()}>
       <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id} >
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())} key={column.id}>
+        {headerGroups.map((headerGroup, index) => (
+          <tr {...headerGroup.getHeaderGroupProps()} key={index} >
+            {headerGroup.headers.map((column, index) => (
+              <th {...column.getHeaderProps(column.getSortByToggleProps())} key={index}>
                 {column.render('Header')}
                 {' '}
                 {
@@ -78,12 +78,12 @@ export default function SampleTable (): React.JSX.Element {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {rows.map((row, index) => {
           prepareRow(row)
           return (
-            <tr {...row.getRowProps()} key={row.id}>
-              {row.cells.map((cell) => (
-                <td {...cell.getCellProps()} key={cell.value}>
+            <tr {...row.getRowProps()} key={index}>
+              {row.cells.map((cell, index) => (
+                <td {...cell.getCellProps()} key={index}>
                   {cell.render('Cell')}
                 </td>
               ))}
