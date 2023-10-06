@@ -8,11 +8,6 @@ const pages = [
     emoji: '📖',
     path: '/sample/',
     name: 'Sample'
-  },
-  {
-    emoji: '💓',
-    path: '/contact/',
-    name: 'Contact'
   }
 ]
 

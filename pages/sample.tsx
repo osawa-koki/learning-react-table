@@ -40,6 +40,18 @@ const data: User[] = [
     name: 'Tom',
     email: 'tom@example.com',
     age: 25
+  },
+  {
+    id: 4,
+    name: 'John',
+    email: 'john@example.com',
+    age: 15
+  },
+  {
+    id: 5,
+    name: 'Mike',
+    email: 'mike@example.com',
+    age: 30
   }
 ]
 
