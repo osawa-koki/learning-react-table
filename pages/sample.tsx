@@ -1,9 +1,13 @@
 import React from 'react'
-import { type Column, useTable } from 'react-table'
+import { type Column, useTable, useSortBy } from 'react-table'
 import { Table } from 'react-bootstrap'
 import type User from '../src/@types/User'
 
 const columns: Column[] = [
+  {
+    Header: 'ID',
+    accessor: 'id'
+  },
   {
     Header: '名前',
     accessor: 'name'
@@ -46,7 +50,10 @@ export default function SampleTable (): React.JSX.Element {
     headerGroups,
     rows,
     prepareRow
-  } = useTable({ columns, data })
+  } = useTable(
+    { columns, data },
+    useSortBy
+  )
 
   return (
     <Table {...getTableProps()}>
@@ -54,7 +61,18 @@ export default function SampleTable (): React.JSX.Element {
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id} >
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} key={column.id}>{column.render('Header')}</th>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())} key={column.id}>
+                {column.render('Header')}
+                {' '}
+                {
+                  ((): string => {
+                    const isSorted = column.isSorted
+                    if (!isSorted) return ''
+                    if (column.isSortedDesc == null) return ''
+                    return ' ' + (column.isSortedDesc ? '🔽' : '🔼')
+                  })()
+                }
+              </th>
             ))}
           </tr>
         ))}
