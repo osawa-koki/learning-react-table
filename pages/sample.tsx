@@ -1,9 +1,13 @@
 import React from 'react'
-import { type Column, useTable } from 'react-table'
+import { type Column, useTable, useSortBy } from 'react-table'
 import { Table } from 'react-bootstrap'
 import type User from '../src/@types/User'
 
 const columns: Column[] = [
+  {
+    Header: 'ID',
+    accessor: 'id'
+  },
   {
     Header: '名前',
     accessor: 'name'
@@ -46,26 +50,40 @@ export default function SampleTable (): React.JSX.Element {
     headerGroups,
     rows,
     prepareRow
-  } = useTable({ columns, data })
+  } = useTable(
+    { columns, data },
+    useSortBy
+  )
 
   return (
     <Table {...getTableProps()}>
       <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id} >
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} key={column.id}>{column.render('Header')}</th>
+        {headerGroups.map((headerGroup, index) => (
+          <tr {...headerGroup.getHeaderGroupProps()} key={index} >
+            {headerGroup.headers.map((column, index) => (
+              <th {...column.getHeaderProps(column.getSortByToggleProps())} key={index}>
+                {column.render('Header')}
+                {' '}
+                {
+                  ((): string => {
+                    const isSorted = column.isSorted
+                    if (!isSorted) return ''
+                    if (column.isSortedDesc == null) return ''
+                    return ' ' + (column.isSortedDesc ? '🔽' : '🔼')
+                  })()
+                }
+              </th>
             ))}
           </tr>
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {rows.map((row, index) => {
           prepareRow(row)
           return (
-            <tr {...row.getRowProps()} key={row.id}>
-              {row.cells.map((cell) => (
-                <td {...cell.getCellProps()} key={cell.value}>
+            <tr {...row.getRowProps()} key={index}>
+              {row.cells.map((cell, index) => (
+                <td {...cell.getCellProps()} key={index}>
                   {cell.render('Cell')}
                 </td>
               ))}
